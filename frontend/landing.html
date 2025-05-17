@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Farmuttopia - Landing Page</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: #3a3aff;
+      min-height: 100vh;
+      font-family: 'Press Start 2P', monospace, Arial, sans-serif;
+      overflow-x: hidden;
+      position: relative;
+    }
+    .nav {
+      display: flex;
+      gap: 32px;
+      padding: 32px 48px 0 48px;
+      font-size: 16px;
+      color: #fff;
+      letter-spacing: 2px;
+      z-index: 2;
+      position: relative;
+    }
+    .nav a {
+      color: #fff;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav a:hover {
+      color: #ffe600;
+    }
+    .logo {
+      font-size: 64px;
+      color: #ffe600;
+      text-shadow: 4px 4px 0 #222, 0 0 8px #ffe60099;
+      font-family: 'Press Start 2P', monospace, Arial, sans-serif;
+      text-align: center;
+      margin-top: 16px;
+      margin-bottom: 0;
+      letter-spacing: 4px;
+    }
+    .cloud {
+      position: absolute;
+      z-index: 1;
+    }
+    .cloud1 { top: 24px; left: 40px; }
+    .cloud2 { top: 40px; right: 80px; }
+    .cloud3 { bottom: 40px; left: 80px; }
+    .cloud4 { bottom: 32px; right: 40px; }
+    .headline {
+      color: #fff;
+      font-size: 40px;
+      text-align: center;
+      margin-top: 48px;
+      font-family: 'Press Start 2P', monospace, Arial, sans-serif;
+      text-shadow: 3px 3px 0 #222;
+      letter-spacing: 2px;
+    }
+    .subheadline {
+      color: #ffe600;
+      font-size: 20px;
+      text-align: center;
+      margin-top: 32px;
+      margin-bottom: 48px;
+      font-family: 'Press Start 2P', monospace, Arial, sans-serif;
+      text-shadow: 2px 2px 0 #222;
+      letter-spacing: 1px;
+    }
+    .desc {
+      color: #fff;
+      font-size: 18px;
+      text-align: center;
+      max-width: 600px;
+      margin: 0 auto 48px auto;
+      font-family: 'Press Start 2P', monospace, Arial, sans-serif;
+      text-shadow: 1px 1px 0 #222;
+    }
+    .play-btn {
+      display: block;
+      margin: 0 auto;
+      background: #ffe600;
+      color: #222;
+      font-size: 28px;
+      font-family: 'Press Start 2P', monospace, Arial, sans-serif;
+      border: 4px solid #222;
+      border-radius: 10px;
+      padding: 24px 64px;
+      box-shadow: 4px 4px 0 #222;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.1s;
+      letter-spacing: 2px;
+      text-shadow: 1px 1px 0 #fff;
+    }
+    .play-btn:hover {
+      background: #fff;
+      color: #3a3aff;
+      transform: scale(1.05);
+    }
+    @media (max-width: 700px) {
+      .logo { font-size: 36px; }
+      .headline { font-size: 22px; }
+      .subheadline { font-size: 14px; }
+      .desc { font-size: 12px; }
+      .play-btn { font-size: 18px; padding: 16px 24px; }
+      .nav { font-size: 12px; gap: 12px; padding: 16px 8px 0 8px; }
+    }
+  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- Clouds -->
+  <div class="cloud cloud1">
+    <svg width="120" height="60" viewBox="0 0 120 60"><ellipse cx="40" cy="40" rx="40" ry="20" fill="#fff"/><ellipse cx="80" cy="30" rx="30" ry="15" fill="#e0f7fa"/><ellipse cx="100" cy="50" rx="20" ry="10" fill="#fff"/></svg>
+  </div>
+  <div class="cloud cloud2">
+    <svg width="100" height="50" viewBox="0 0 100 50"><ellipse cx="30" cy="30" rx="30" ry="15" fill="#fff"/><ellipse cx="70" cy="20" rx="20" ry="10" fill="#e0f7fa"/></svg>
+  </div>
+  <div class="cloud cloud3">
+    <svg width="120" height="60" viewBox="0 0 120 60"><ellipse cx="40" cy="40" rx="40" ry="20" fill="#fff"/><ellipse cx="80" cy="30" rx="30" ry="15" fill="#e0f7fa"/><ellipse cx="100" cy="50" rx="20" ry="10" fill="#fff"/></svg>
+  </div>
+  <div class="cloud cloud4">
+    <svg width="100" height="50" viewBox="0 0 100 50"><ellipse cx="30" cy="30" rx="30" ry="15" fill="#fff"/><ellipse cx="70" cy="20" rx="20" ry="10" fill="#e0f7fa"/></svg>
+  </div>
+
+  <div class="nav">
+    <a href="#">FARMUTTOPIA</a>
+
+  </div>
+  <div class="logo">Farmuttopia</div>
+  <div class="headline">EXPLORE A NEW<br>TYPE OF GAMEPLAY</div>
+  <div class="subheadline">Cultivate, Compete, and Earn in Farmuttopia!</div>
+  <div class="desc">
+    Make your home in a world of pixel farming adventure.<br>
+    Plant, water, and harvest to earn real rewards.<br>
+    Compete for the top spot and build new communities.
+  </div>
+  <button class="play-btn" onclick="window.location.href='index.html'">PLAY NOW</button>
+</body>
+</html> 

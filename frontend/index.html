@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Farmuttopia - Simple Web UI</title>
+  <style>
+    body {
+      background: linear-gradient(to top, #a8e063 0%, #56ab2f 100%);
+      font-family: 'Press Start 2P', monospace, Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    .top-bar {
+      background: linear-gradient(90deg, #4facfe 0%, #00f2fe 100%);
+      color: #fff;
+      padding: 16px;
+      font-size: 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      letter-spacing: 1px;
+      border-bottom: 4px solid #2e8b57;
+      box-shadow: 0 2px 8px #2e8b5740;
+    }
+    .container {
+      display: flex;
+      margin: 0 auto;
+      max-width: 900px;
+      min-height: 600px;
+      background: rgba(255,255,255,0.85);
+      border: 4px solid #2e8b57;
+      border-radius: 18px;
+      margin-top: 32px;
+      box-shadow: 0 8px 32px #2e8b5740;
+    }
+    .sidebar {
+      width: 180px;
+      background: linear-gradient(180deg, #ffe259 0%, #ffa751 100%);
+      padding: 24px 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      border-right: 4px solid #2e8b57;
+      border-radius: 14px 0 0 14px;
+    }
+    .sidebar button {
+      background: linear-gradient(90deg, #43cea2 0%, #185a9d 100%);
+      color: #fff;
+      border: 3px solid #2e8b57;
+      border-radius: 12px;
+      font-size: 18px;
+      font-family: inherit;
+      padding: 16px 0;
+      margin: 0 8px;
+      cursor: pointer;
+      box-shadow: 2px 2px 0 #2e8b57;
+      transition: background 0.2s, transform 0.1s;
+    }
+    .sidebar button:hover {
+      background: linear-gradient(90deg, #185a9d 0%, #43cea2 100%);
+      transform: scale(1.05);
+    }
+    .farm-area {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 32px;
+    }
+    .farm-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 64px);
+      grid-template-rows: repeat(4, 64px);
+      gap: 12px;
+      background: repeating-linear-gradient(
+        135deg, #b6e388, #b6e388 10px, #a3d977 10px, #a3d977 20px
+      );
+      border: 3px solid #2e8b57;
+      border-radius: 12px;
+      padding: 16px;
+      box-shadow: 0 8px 32px #2e8b5740, 0 0 0 4px #fff inset;
+    }
+    .plot {
+      width: 64px;
+      height: 64px;
+      background: #e2b07a;
+      border: 2px solid #8d5524;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      position: relative;
+      transition: box-shadow 0.2s, background 0.2s, transform 0.1s;
+      box-shadow: 0 2px 8px #8d552440;
+    }
+    .plot:hover {
+      box-shadow: 0 0 0 4px #ffe259, 0 2px 8px #8d552440;
+      background: #f7c873;
+      transform: scale(1.05);
+    }
+    .plot:active {
+      background: #e2b07a;
+      transform: scale(0.97);
+    }
+    .pixel-art {
+      image-rendering: pixelated;
+      width: 48px;
+      height: 48px;
+    }
+    .notification {
+      position: fixed;
+      bottom: 32px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #43cea2;
+      color: #fff;
+      padding: 16px 32px;
+      border-radius: 12px;
+      font-size: 18px;
+      box-shadow: 0 2px 12px #2e8b5740;
+      display: none;
+      z-index: 100;
+    }
+    /* Sidebar button icons */
+    .sidebar button::before {
+      content: '';
+      display: inline-block;
+      width: 24px; height: 24px;
+      margin-right: 8px;
+      vertical-align: middle;
+      background-size: contain;
+      background-repeat: no-repeat;
+    }
+    .sidebar button:nth-child(1)::before { background-image: url('shop-icon.svg'); }
+    .sidebar button:nth-child(2)::before { background-image: url('expand-icon.svg'); }
+    .sidebar button:nth-child(3)::before { background-image: url('leaderboard-icon.svg'); }
+    .sidebar button:nth-child(4)::before { background-image: url('rewards-icon.svg'); }
+    .plot[data-tooltip]:hover:after {
+      content: attr(data-tooltip);
+      position: absolute;
+      left: 50%;
+      top: -32px;
+      transform: translateX(-50%);
+      background: #222;
+      color: #fff;
+      padding: 4px 12px;
+      border-radius: 6px;
+      font-size: 12px;
+      white-space: nowrap;
+      pointer-events: none;
+      z-index: 20;
+    }
+    .leaderboard-preview {
+      margin-top: 32px;
+      background: #fff8;
+      border-radius: 8px;
+      padding: 8px 4px;
+      font-size: 14px;
+      color: #185a9d;
+      text-align: left;
+      box-shadow: 0 2px 8px #2e8b5740;
+    }
+  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="top-bar">
+    <span id="points">Points: 25</span>
+    <span id="land">Land: 6/10</span>
+    <span id="season">Season Pool: 5000</span>
+    <span style="cursor:pointer;">?</span>
+  </div>
+  <div class="container">
+    <div class="sidebar">
+      <button onclick="notify('Shop clicked!')">🛒 Shop</button>
+      <button onclick="notify('Expand clicked!')">➕ Expand</button>
+      <button onclick="notify('Leaderboard clicked!')">🏆 Leaderbd</button>
+      <button onclick="notify('Rewards clicked!')">🎁 Rewards</button>
+      <div class="leaderboard-preview">
+        <div>🏅 <b>Alice</b> 120</div>
+        <div>🥈 <b>Bob</b> 98</div>
+        <div>🥉 <b>Carol</b> 75</div>
+      </div>
+    </div>
+    <div class="farm-area">
+      <div class="farm-grid" id="farmGrid">
+        <!-- Plots will be rendered here -->
+      </div>
+    </div>
+  </div>
+  <div class="notification" id="notification"></div>
+  <img src="https://em-content.zobj.net/source/microsoft-teams/363/herb_1f33f.png" style="position:absolute; left:20px; bottom:20px; width:48px; z-index:10;" alt="grass">
+  <img src="https://em-content.zobj.net/source/microsoft-teams/363/hibiscus_1f33a.png" style="position:absolute; right:40px; bottom:30px; width:32px; z-index:10;" alt="flower">
+  <script>
+    // 0: empty, 1: planted, 2: watered, 3: harvestable
+    const plotStates = [
+      0, 0, 0, 0,
+      0, 1, 2, 0,
+      0, 0, 3, 0,
+      0, 0, 0, 0
+    ];
+    const icons = [
+      // Empty
+      `<svg class='pixel-art' viewBox="0 0 64 64"><rect width="64" height="64" rx="8" fill="#E0C097" stroke="#B8860B" stroke-width="2"/></svg>`,
+      // Planted (seedling)
+      `<svg class='pixel-art' viewBox="0 0 64 64"><rect width="64" height="64" rx="8" fill="#E0C097" stroke="#B8860B" stroke-width="2"/><ellipse cx="32" cy="48" rx="10" ry="4" fill="#8B5E3C"/><path d="M32 48 Q32 38 36 36 Q34 40 38 38 Q34 34 32 38 Q30 34 26 38 Q30 40 28 36 Q32 38 32 48" fill="#228B22"/></svg>`,
+      // Watered (water drop)
+      `<svg class='pixel-art' viewBox="0 0 64 64"><rect width="64" height="64" rx="8" fill="#E0C097" stroke="#B8860B" stroke-width="2"/><ellipse cx="32" cy="48" rx="10" ry="4" fill="#8B5E3C"/><ellipse cx="32" cy="38" rx="6" ry="10" fill="#00BFFF" opacity="0.7"/></svg>`,
+      // Harvestable (crop)
+      `<svg class='pixel-art' viewBox="0 0 64 64"><rect width="64" height="64" rx="8" fill="#E0C097" stroke="#B8860B" stroke-width="2"/><ellipse cx="32" cy="48" rx="10" ry="4" fill="#8B5E3C"/><ellipse cx="32" cy="38" rx="8" ry="12" fill="#FFD700"/><rect x="28" y="30" width="8" height="16" rx="4" fill="#228B22"/></svg>`
+    ];
+    const sound = new Audio('https://cdn.pixabay.com/audio/2022/07/26/audio_124bfa4c7b.mp3');
+    const plotStateNames = ["Empty", "Planted", "Watered", "Harvestable"];
+    function renderFarm() {
+      const grid = document.getElementById('farmGrid');
+      grid.innerHTML = '';
+      for (let i = 0; i < 16; i++) {
+        const div = document.createElement('div');
+        div.className = 'plot';
+        div.innerHTML = icons[plotStates[i]];
+        div.setAttribute('data-tooltip', plotStateNames[plotStates[i]]);
+        div.onclick = () => onPlotClick(i);
+        grid.appendChild(div);
+      }
+    }
+    function onPlotClick(i) {
+      if (plotStates[i] === 0) {
+        plotStates[i] = 1;
+        notify('Planted a seed!');
+      } else if (plotStates[i] === 1) {
+        plotStates[i] = 2;
+        notify('Watered the plant!');
+      } else if (plotStates[i] === 2) {
+        plotStates[i] = 3;
+        notify('Ready to harvest!');
+      } else if (plotStates[i] === 3) {
+        plotStates[i] = 0;
+        notify('Harvested!');
+      }
+      sound.currentTime = 0; sound.play();
+      renderFarm();
+    }
+    function notify(msg) {
+      const n = document.getElementById('notification');
+      n.textContent = msg;
+      n.style.display = 'block';
+      setTimeout(() => { n.style.display = 'none'; }, 1200);
+    }
+    renderFarm();
+  </script>
+</body>
+</html> 

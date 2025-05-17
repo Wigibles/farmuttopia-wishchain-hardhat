@@ -103,3 +103,11 @@ Farmuttopia is a blockchain-based farming game where players can plant seeds, wa
 ## Note
 
 This contract requires USDT tokens to be approved before any transactions can be made. Make sure to approve the contract address with sufficient USDT allowance before playing.
+
+## Simple Web UI
+
+A simple web UI is available in the `frontend` folder. To run it:
+1. Navigate to the `frontend` directory: `cd frontend`
+2. Open `index.html` in your browser (no build step required).
+
+This UI is a static HTML/JS/CSS implementation for demo and testing purposes.
