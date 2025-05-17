@@ -1,4 +1,4 @@
-# Farmuttopia Smart Contract
+# Farmuttopia
 
 Farmuttopia is a blockchain-based farming game where players can plant seeds, water them, and harvest crops to earn points and rewards. The game uses USDT as its primary currency for transactions.
 
